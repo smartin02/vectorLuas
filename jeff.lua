@@ -44,6 +44,11 @@ function Vector.div(v1, v2)
   local ra = v1.A - v2.A 
   return Vector.new_pol(rm, ra) 
 end
+function Vector.rec(v1)
+  local rm = 1 / v1.M
+  local ra = -1 * v1.A
+  return Vector.new_pol(rm, ra)
+end
 
 rect1 = Vector.new_rect(0, 1)
 rect2 = Vector.new_rect(1, 0)
