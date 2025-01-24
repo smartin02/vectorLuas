@@ -1,3 +1,4 @@
+require "math"
 Vector = {}
 MetaVector = {}
 MetaVector.__index = Vector
@@ -6,7 +7,7 @@ function Vector.new_rect(compX, compY)
   local instance = setmetatable({}, MetaVector)
   instance.X = compX
   instance.Y = compY
-  instance.M = math.sqrt(math.pow(compX, 2) + math.pow(compY, 2))
+  instance.M = math.sqrt(compX^2 + compY^2)
   instance.A = math.atan(compY / compX)
   return instance
 end
@@ -49,13 +50,21 @@ function Vector.rec(v1)
   local ra = -1 * v1.A
   return Vector.new_pol(rm, ra)
 end
+function Vector.par(i1, i2)
+  local r1 = Vector.mul(i1, i2)
+  local r2 = Vector.add(i1, i2)
 
-rect1 = Vector.new_rect(0, 1)
+  return Vector.div(r1, r2)
+end
+function Vector.v_div(v1, i1, i2)
+  -- the first argument given is the component that the voltage and current will be found
+  -- all other arguments are expected to be in parallel 
+  local r1 = Vector.add(i1, i2)
+  Vector.div(i1, r1)
+end
+
+rect1 = Vector.new_rect(1, 0)
 rect2 = Vector.new_rect(1, 0)
-rect3 = Vector.add(rect1, rect2)
+rect3 = Vector.par(rect1, rect2)
 
-rect1:display()
-print('\n')
-rect2:display()
-print('\n')
 rect3:display()
